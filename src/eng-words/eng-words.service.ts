@@ -10,7 +10,8 @@ export class EngWordsService {
 
   async getAllWordsCollection() {
     const users = await this.engWordsRepository.findAll({
-      attributes: { exclude: ['createdAt', 'updatedAt'] }
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
+      order: [['id', 'ASC']]
     })
 
     return users
@@ -19,6 +20,6 @@ export class EngWordsService {
   async toggleRemember(id: number) {
     const word = await this.engWordsRepository.findOne({ where: { id } })
     word.remember = !word.remember
-    word.save()
+    await word.save()
   }
 }

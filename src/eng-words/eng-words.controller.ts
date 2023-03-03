@@ -2,7 +2,7 @@ import { EngWordsService } from './eng-words.service'
 import { Controller } from '@nestjs/common'
 import { Body, Get, Put } from '@nestjs/common'
 
-@Controller('engWords')
+@Controller('/api/engWords')
 export class EngWordsController {
   constructor(private engWordsServices: EngWordsService) {}
 
