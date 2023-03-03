@@ -1,6 +1,6 @@
 import { EngWordsService } from './eng-words.service'
 import { Controller } from '@nestjs/common'
-import { Get, Put } from '@nestjs/common/decorators'
+import { Body, Get, Put } from '@nestjs/common'
 
 @Controller('engWords')
 export class EngWordsController {
@@ -12,8 +12,7 @@ export class EngWordsController {
   }
 
   @Put()
-  async toggleRemember(id:number){
-    console.log(id)
+  async toggleRemember(@Body() { id }: { id: number }) {
     return await this.engWordsServices.toggleRemember(id)
   }
 }
