@@ -15,4 +15,10 @@ export class EngWordsService {
 
     return users
   }
+
+  async toggleRemember(id: number) {
+    const word = await this.engWordsRepository.findOne({ where: { id } })
+    word.remember = !word.remember
+    word.save()
+  }
 }
