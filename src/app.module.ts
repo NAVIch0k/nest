@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize'
 import { EngWordsModule } from './eng-words/eng-words.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   controllers: [],
@@ -21,7 +22,8 @@ import { EngWordsModule } from './eng-words/eng-words.module';
       models: [engWords],
       autoLoadModels:true
     }),
-    EngWordsModule
+    EngWordsModule,
+    UsersModule
   ]
 })
 export class AppModule {}
