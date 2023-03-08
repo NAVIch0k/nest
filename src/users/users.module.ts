@@ -1,3 +1,4 @@
+import { jwtStrategy } from './../strategy/jwtStrategy';
 import { Users } from './entities/user.entity'
 import { SequelizeModule } from '@nestjs/sequelize'
 import { Sessions } from './entities/sessions.entity'
@@ -8,6 +9,6 @@ import { UsersController } from './users.controller'
 @Module({
   imports: [SequelizeModule.forFeature([Sessions, Users])],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService,jwtStrategy]
 })
 export class UsersModule {}
