@@ -1,11 +1,12 @@
-import { jwtGuards } from './../guards/jwt-guards';
+import { jwtGuards } from './../guards/jwt-guards'
 import {
   Controller,
   Post,
   Body,
   Param,
   Delete,
-  UseGuards
+  UseGuards,
+  Request
 } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { UserDto } from './dto/user.dto'
@@ -29,5 +30,15 @@ export class UsersController {
   @Post('/login')
   login(@Body() User: UserDto) {
     return this.usersService.login(User)
+  }
+
+  @UseGuards(jwtGuards)
+  @Post('/refresh')
+  refresh(@Body() { refresh }: { refresh: string }, @Request() req) {
+    return this.usersService.refresh({
+      refresh,
+      id: req.user.id,
+      email: req.user.email
+    })
   }
 }
