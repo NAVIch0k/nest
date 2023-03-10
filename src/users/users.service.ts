@@ -1,6 +1,6 @@
 import { Users } from './entities/user.entity'
 import { InjectModel } from '@nestjs/sequelize'
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { UserDto } from './dto/user.dto'
 import { Sessions } from './entities/sessions.entity'
 import { compareSync } from 'bcrypt'
@@ -21,9 +21,9 @@ export class UsersService {
     const user = await this.usersRepository.findOne({
       where: { email: data.email }
     })
-    if (!user) throw new UnauthorizedException({message:'User not found'})
+    if (!user) throw new BadRequestException({message:'User not found'})
     const isPassEquels = compareSync(data.password, user.password)
-    if (!isPassEquels) throw new UnauthorizedException({ message: 'Password or login incorrect' })
+    if (!isPassEquels) throw new BadRequestException({ message: 'Password or login incorrect' })
     const token = sign(
       { email: data.email, id: user.id },
       process.env.ACCESS_TOKEN,
@@ -48,7 +48,7 @@ export class UsersService {
         userId: user.id
       })
     }
-    return { token, refToken }
+    return { token, refresh:refToken }
   }
 
   async remove(id: number) {
@@ -67,7 +67,7 @@ export class UsersService {
     const session = await this.sessionsRepository.findOne({
       where: { refresh }
     })
-    if (!session) throw new UnauthorizedException({message:'User not found'})
+    if (!session) throw new BadRequestException({message:'User not found'})
     const newRefresh = sign({ email, id }, process.env.REFRESH_TOKEN, {
       expiresIn: '24h'
     })
