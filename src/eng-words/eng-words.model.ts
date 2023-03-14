@@ -3,7 +3,7 @@ import { Model, Table, Column, DataType } from 'sequelize-typescript'
 export interface engWordsCreationAttr {
   word: string
   translate: string
-  ch: string
+  ch: number
 }
 
 @Table({ tableName: 'engWords' })
@@ -21,6 +21,6 @@ export class engWords extends Model<engWords, engWordsCreationAttr> {
   translate: string
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
   remember: boolean
-  @Column({ type: DataType.STRING, allowNull: false })
-  ch: string
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  ch: number
 }
