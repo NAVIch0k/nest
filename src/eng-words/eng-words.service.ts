@@ -1,4 +1,4 @@
-import { engWords } from './eng-words.model'
+import { engWords, engWordsCreationAttr } from './eng-words.model'
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 
@@ -21,5 +21,12 @@ export class EngWordsService {
     const word = await this.engWordsRepository.findOne({ where: { id } })
     word.remember = !word.remember
     await word.save()
+  }
+
+  async addWords(data: engWordsCreationAttr) {
+    const { dataValues } = await this.engWordsRepository.create(data)
+    const { createdAt, updatedAt, ...newData } = dataValues
+    console.log(newData)
+    return newData
   }
 }

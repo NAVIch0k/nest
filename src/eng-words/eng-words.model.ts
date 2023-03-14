@@ -1,8 +1,9 @@
 import { Model, Table, Column, DataType } from 'sequelize-typescript'
 
-interface engWordsCreationAttr {
+export interface engWordsCreationAttr {
   word: string
   translate: string
+  ch: string
 }
 
 @Table({ tableName: 'engWords' })
@@ -20,4 +21,6 @@ export class engWords extends Model<engWords, engWordsCreationAttr> {
   translate: string
   @Column({ type: DataType.BOOLEAN, defaultValue: false })
   remember: boolean
+  @Column({ type: DataType.STRING, allowNull: false })
+  ch: string
 }
